@@ -11,14 +11,14 @@ generator client {
 model LoginInfo {
     Email           String      @db.VarChar(64) @id // 64 is heaps, I googled.
     Password        String      @db.Char(60) // change this to the len of the password hash if it is changed
-    UserID          String      @db.Uuid @unique @default(uuid())
+    UserID          String      @db.Uuid @unique
     IsAdmin         Boolean     // this is duplicated from User table to remove a join for every login request
-    // User            User?       @relation(fields: [UserID],references: [UserID])
+    User            User?       @relation(fields: [UserID],references: [UserID])
 }
 
 model User {
     UserID          String      @db.Uuid @id @default(uuid())
-    //LoginInfo       LoginInfo?
+    LoginInfo       LoginInfo?
     Name            String      @db.VarChar(32) @unique
     IsAdmin         Boolean     
     LastActed       DateTime    @default(now())
