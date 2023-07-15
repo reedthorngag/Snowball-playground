@@ -1,0 +1,51 @@
+
+body {
+    margin: 0;
+    background-image: radial-gradient(#000092,#000055);
+}
+
+header {
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    background-image: radial-gradient(#00b7ff,#0000b1);
+}
+
+banner {
+    display:block;
+    margin-top: 2vh;
+    margin-left: 4vw;
+    width: 92vw;
+    height: 30vh;
+    background-color: #101010;
+}
+
+.content-container {
+    display:flex;
+    justify-content: center;
+    align-items: top;
+}
+
+content {
+    display: inline-block;
+    margin: 2vh 0 5vh 3vw;
+    height: 1000px;
+    width: 70vw;
+    background-color: #0f0f58;
+}
+
+sidebar {
+    display: inline-block;
+    width: 20vw;
+    height: 50vh;
+    background-color: red;
+    margin: 10vh 2vw;
+}
+
+.logo {
+    height:100%;
+}

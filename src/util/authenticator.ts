@@ -121,8 +121,6 @@ class Authenticator {
 
         if (!result || this.invalidatedTokens.has(result.tokenID))
             return {valid:false,tokenExpired:tokenExpired};
-        
-        logger.info(JSON.stringify(result));
 
         return {valid:true,userID:result.userID,isAdmin:result.isAdmin};
     }
