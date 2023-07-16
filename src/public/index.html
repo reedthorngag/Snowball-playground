@@ -7,9 +7,23 @@
     </head>
     <body>
         <div>
-            <header>
-                <img class="logo" src="./images/logo.png" alt="Snowball logo">
-            </header>
+            <header-container>
+                <header>
+                    <a href="/">
+                        <img class="logo" src="./images/logo.png" alt="Snowball logo">
+                    </a>
+                    <search>
+                        <img class="search-icon" src="./images/search-icon.png">
+                        <form action="/" method="GET" class="search-form">
+                            <input type="text" class="search-input" name="search" placeholder="Search...">
+                        </form>
+                    </search>
+                    <profile>
+                        <button onclick="window.location.href = '/login';">Login</button>
+                        <button onclick="window.location.href = '/signup';">Signup</button>
+                    </profile>
+                </header>
+            </header-container>
             <banner>
 
             </banner>

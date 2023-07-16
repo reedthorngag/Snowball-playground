@@ -1,27 +1,73 @@
 
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+    background-color: #000055;
+}
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
 body {
     margin: 0;
     background-image: radial-gradient(#000092,#000055);
 }
 
-header {
+header-container {
+    display: block;
+    position: sticky;
+    top: 0;
     width: 100%;
     height: 8vh;
+}
+
+header {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: sticky;
-    top: 0;
+    position: relative;
     background-image: radial-gradient(#00b7ff,#0000b1);
+}
+
+header profile {
+    display: block;
+    position: absolute;
+    top:0;
+    right:0;
+    width:fit-content;
+    height: 100%;
+    padding-right: 1vw;
+
+}
+
+header profile button {
+    height: 100%;
+    width: fit-content;
+    padding: 0 1vw;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 2vmin;
+    font-size: 3vh;
+    transition: all 0.1s linear;
+}
+
+header profile button:hover {
+    background-color: #00000020;
+    box-shadow: inset 0 0 1vw 0 #000070, 0 0 1vw 0 #000070;
 }
 
 banner {
     display:block;
-    margin-top: 2vh;
-    margin-left: 4vw;
-    width: 92vw;
+    margin-top: 3vh;
+    margin-left: 2vw;
+    width: 96vw;
     height: 30vh;
-    background-color: #101010;
+    background-color: #0000a0;
+    border-radius: 1vmin;
 }
 
 .content-container {
@@ -36,16 +82,49 @@ content {
     height: 1000px;
     width: 70vw;
     background-color: #0f0f58;
+    border-radius: 1vmin;
 }
 
 sidebar {
     display: inline-block;
     width: 20vw;
     height: 50vh;
-    background-color: red;
-    margin: 10vh 2vw;
+    background-color: #0000a0;
+    margin: 5vh 2vw;
+    border-radius: 1vmin;
 }
 
 .logo {
-    height:100%;
+    height:80%;
+    position: absolute;
+    top: 14%;
+    left: 1.5%;
+}
+
+header search {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: fit-content;
+}
+
+.search-icon {
+    display:inline-block;
+    height: 3vh;
+    margin: 2.5vh 1vw;
+}
+
+.search-form {
+    display: inline-block;
+}
+
+.search-input {
+    display: inline-block;
+    border: none;
+    background-color: transparent;
+    color: black !important;
+}
+
+.search-input:focus {
+    outline: none;
 }
