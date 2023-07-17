@@ -9,7 +9,7 @@ const login:Route = ['/login','POST','optional', async (req:any,res:any) => {
         return;
     }
 
-    if (!req.body.username || !req.body.password) {
+    if (!req.body.email || !req.body.password) {
         res.redirect('/login');
         return;
     }
@@ -23,7 +23,7 @@ const login:Route = ['/login','POST','optional', async (req:any,res:any) => {
             IsAdmin:true
         },
         where: {
-            Email:req.body.username
+            Email:req.body.email
         }
     });
 

@@ -3,6 +3,7 @@
     <head>
       <meta charset="UTF-8">
       <link type="text/css" rel="stylesheet" href="./css/css.css">
+      <script type="text/javascript" src="./js/script.js"></script>
       <title>Snowball</title>
     </head>
     <body>
@@ -18,9 +19,9 @@
                             <input type="text" class="search-input" name="search" placeholder="Search...">
                         </form>
                     </search>
-                    <profile>
-                        <button onclick="window.location.href = '/login';">Login</button>
-                        <button onclick="window.location.href = '/signup';">Signup</button>
+                    <profile id="profile">
+                        <button onclick="showlogin()">Login</button>
+                        <button onclick="showsignup()">Signup</button>
                     </profile>
                 </header>
             </header-container>
@@ -36,5 +37,61 @@
 
             </sidebar>
         </div>
+        <login id="login">
+            <container>
+                <button class="close-button" onclick="hidelogin()">X</button>
+                <form class="login-form" onsubmit="submitLogin(this);return false;">
+                    <h2>Login</h2>
+
+                    <label for="email">Email: </label>
+                    <input type="text" id="email" placeholder="example@snowball.com">
+
+                    <label for="password">Password: </label>
+                    <input type="password" id="password" placeholder="************">
+
+                    <div class="relative-width small-top-margin">
+                        <input type="submit" value="Login" class="button left primary-button">
+
+                        <input type="button" onclick="hidelogin();showsignup();" class="button right" value="Sign up">
+                    </div>
+
+                </form>
+            </container>
+        </login>
+        <signup id="signup">
+            <container>
+                <button class="close-button" onclick="hidesignup()">X</button>
+                <form method="POST" action="/api/signup" class="login-form">
+                    <h2>Sign up</h2>
+
+                    <label for="name">Name: </label>
+                    <input type="text" id="name" name="name" placeholder="Your name">
+
+                    <label for="email">Email: </label>
+                    <input type="email" id="email" name="email" placeholder="example@snowball.com">
+
+                    <label for="displayname">Display name: </label>
+                    <input type="text" id="displayname" name="displayname" placeholder="What everyone sees">
+
+                    <label for="age">Age: </label>
+                    <input type="date" id="age" name="age"><br/>
+
+                    <label for="signup-password">Password: </label>
+                    <input type="password" id="signup-password" name="password" min="8" placeholder="************">
+
+                    <label for="confim-password">Confirm password: </label>
+                    <input type="password" id="confirm-password"placeholder="************">
+
+                    <div class="relative-width small-top-margin">
+                        <input type="submit" value="signup" class="button left primary-button">
+
+                        <input type="button" onclick="hidesignup();showlogin();" class="button right" value="Login">
+                    </div>
+                </form>
+            </container>
+        </signup>
+        <div id="login-overlay" onclick="hidelogin()"></div>
+        <div id="signup-overlay" onclick="hidesignup()"></div>
+        <script type="text/javascript" src="./js/load.js"></script>
     </body>
 </html>
