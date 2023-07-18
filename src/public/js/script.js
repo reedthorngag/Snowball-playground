@@ -43,19 +43,59 @@ function hidesignup() {
 }
 
 function submitLogin(form) {
-    console.log(form['0'])
+    
+    form['0'].classList.remove('input-error');
+    form['1'].classList.remove('input-error');
+
     let failed = false;
     if (!form['0'].value) {
-        form['0'].classList.add('input-error')
+        form['0'].classList.add('input-error');
         failed = true;
     }
     if (!form['1'].value) {
-        form['1'].classList.add('input-error')
+        form['1'].classList.add('input-error');
         failed = true;
     }
-    if (failed) return;
+    if (failed) {
+        loginError('Please fill out all fields!');
+        return;
+    }
 
-    // TODO: send post request to /api/login
+    const req = new XMLHttpRequest();
+    req.open('POST','/api/login');
+    req.setRequestHeader('Content-type','application/json');
+    req.onload = () => {
+        const data = JSON.parse(req.responseText)
+        switch (data.status) {
+            case 'success':
+                document.cookie = 'auth='+data.token+'; max-age='+(60*60*24*5)/* 5 days */+'; path=/; Samesite=Strict';
+                window.location.reload();
+                break;
+            case 'invalid_credentials':
+                loginError('Incorrect username or password!');
+                break;
+            default:
+                loginError('Unexpected server response! try again.')
+        }
+    };
+    req.onerror = () => {
+        switch (req.status) {
+            case 404:
+                loginError('Not connected! check your internet.');
+            default: console.log("Error, unknown status: "+req.status);
+                break;
+        }
+    };
+    req.send('{"email":"'+form['0'].value+'","password":"'+form['1'].value+'"}');
 }
 
+function loginError(string) {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('login-error').textContent = string;
+}
+
+function signupError(string) {
+    document.getElementById('signup-error').style.display = 'block';
+    document.getElementById('signup-error').textContent = string;
+}
 

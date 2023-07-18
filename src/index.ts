@@ -15,7 +15,6 @@ const port: number = parseInt(process_port) || 3000;
 app.use('/api',router);
 
 app.post('/test',(req,res)=>{
-    
-})
+});
 
 app.listen(port,()=>logger.info(`Listening on port ${port}`));

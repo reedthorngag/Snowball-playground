@@ -255,3 +255,12 @@ h2 {
     box-shadow: 0 0 0.5vmin 0 #a00000;
 }
 
+error-string {
+    display: block;
+    color: #f03030;
+}
+
+.form-error {
+    display: none;
+}
+

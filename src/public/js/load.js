@@ -7,9 +7,11 @@ document.addEventListener('keyup',(event) => {
     }
 });
 
+let userID;
+
 if (document.cookie.includes('auth=')) {
-    let auth = atob(document.cookie.split('auth=')[1].split('; ')[0]);
-    console.log(auth)
+    let auth = JSON.parse(atob(document.cookie.split('auth=')[1].split('; ')[0].split('.')[1]));
+    userID = auth.userID
 } else {
     console.log('not logged in!')
 }
