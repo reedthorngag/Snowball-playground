@@ -10,25 +10,28 @@ export default function () {
 
     (async () => {
 
+        logger.info('Loading mock data...')
+
         await prismaClient.loginInfo.deleteMany();
         await prismaClient.user.deleteMany();
         for (let i=100;i--;)
             await prismaClient.user.create({
                 data: {
                     Name: "testUser_"+i,
+                    DisplayName: "<h1>testUser</h1>_"+i,
+                    Bio: "<h1>test</h1>",
                     IsAdmin: false
                 }
             })
 
-        logger.info((await prismaClient.user.findFirst())?.UserID)
-        logger.info(JSON.stringify(await prismaClient.loginInfo.create({
+        await prismaClient.loginInfo.create({
             data: {
                 Email:'admin',
                 Password:passwordHash,
                 IsAdmin:true,
                 UserID: (await prismaClient.user.findFirst())?.UserID
             }
-        })));
+        });
         await prismaClient.loginInfo.create({
             data: {
                 Email:'testuser',
@@ -37,8 +40,16 @@ export default function () {
                 UserID: (await prismaClient.user.findMany())[1]?.UserID
             }
         });
-        logger.warn(JSON.stringify(await prismaClient.loginInfo.findFirst()));
-        logger.warn(JSON.stringify(await prismaClient.user.findFirst()));
+        await prismaClient.loginInfo.create({
+            data: {
+                Email:'<h1>testuser</h1>',
+                Password:passwordHash,
+                IsAdmin: false,
+                UserID: (await prismaClient.user.findMany())[2]?.UserID
+            }
+        });
+
+        logger.info('Loaded mock data!')
     })();
 }
 

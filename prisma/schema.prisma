@@ -19,9 +19,10 @@ model LoginInfo {
 model User {
     UserID          String      @db.Uuid @id @default(uuid())
     LoginInfo       LoginInfo?
-    Name            String      @db.VarChar(32) @unique
-    IsAdmin         Boolean     
-    LastActed       DateTime    @default(now())
+    Name            String      @db.VarChar(48)
+    DisplayName     String      @db.VarChar(24) @unique
+    IsAdmin         Boolean
+    LastActed       DateTime    @default(now()) @updatedAt
     Joined          DateTime    @default(now())
     Bio             String      @db.VarChar(1024) @default("")
     CommentsScore   Int         @default(0)
@@ -37,6 +38,7 @@ model User {
     CompletedRequirements CompletedRequirement[]
     ReportedUsers   Report[]    @relation(name:"ReportedUsers")
     ReportsAgainst  Report[]    @relation(name:"ReportsAgainst")
+    @@index([DisplayName])
 }
 
 model Community {
@@ -48,6 +50,7 @@ model Community {
     Members         CommunityMember[]
     Posts           Post[]
     Tags            TaggedCommunity[]
+    @@index([Name])
 }
 
 model CommunityMember {

@@ -13,6 +13,7 @@ logger.info('Importing routes...')
 glob.sync( 'src/routes/**/*.ts' ).forEach((file:string)=>{
     routesList.push(...require(path.resolve(file)).default);
 });
+
 for (const [path,method,auth,handler] of routesList) {
     logger.info(`Adding route: /api${path}`);
     try{
