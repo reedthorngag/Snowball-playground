@@ -99,3 +99,10 @@ function signupError(string) {
     document.getElementById('signup-error').textContent = string;
 }
 
+function connectionError(string) {
+    document.getElementById('error-overlay').display = 'block';
+    document.getElementById('error-box').display = 'block';
+    document.getElementById('error-overlay').style.opacity = 1;
+    document.getElementById('error-overlay').style.opacity = 1;
+}
+

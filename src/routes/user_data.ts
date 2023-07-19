@@ -28,10 +28,6 @@ const profile:Route = ['/profile','GET','required', async (req:any,res:any) => {
 
 }]
 
-
-
-
-
 const routeList:Route[] = [
     profile
 ]
