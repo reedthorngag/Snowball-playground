@@ -49,6 +49,18 @@ export default function () {
             }
         });
 
+        await prismaClient.community.
+
+        for (let i=100;i--;)
+            await prismaClient.user.create({
+                data: {
+                    Name: "testUser_"+i,
+                    DisplayName: "<h1>testUser</h1>_"+i,
+                    Bio: "<h1>test</h1>",
+                    IsAdmin: false
+                }
+            })
+
         logger.info('Loaded mock data!')
     })();
 }

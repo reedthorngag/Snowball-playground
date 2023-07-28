@@ -1,7 +1,7 @@
 import Route from "../types/route";
 import logger from "../util/logger";
 
-const fetch_post = ['/fetch/post', 'GET', 'none', async (req:any,res:any) => {
+const fetch_post = ['/fetch/post', 'GET', 'optional', async (req:any,res:any) => {
     
     if (!req.query.id) {
         res.status(404).send('missing post id parameter ("id")');
@@ -10,7 +10,7 @@ const fetch_post = ['/fetch/post', 'GET', 'none', async (req:any,res:any) => {
 
     const post = await prismaClient.post.findUnique({
         where: {
-            PostID:req.query.id,
+            PostID:(await prismaClient.post.findFirst())!.PostID,//req.query.id,
             IsDeleted:false
         },
         select: {

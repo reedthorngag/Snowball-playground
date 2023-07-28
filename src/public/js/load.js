@@ -58,3 +58,6 @@ function load() {
 
 }
 
+let req = new XMLHttpRequest();
+req.open('GET', '/api/post?id=1');
+req.send();

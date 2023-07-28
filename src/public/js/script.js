@@ -100,9 +100,29 @@ function signupError(string) {
 }
 
 function connectionError(string) {
+    document.getElementById('error-box-text').innerText = string;
     document.getElementById('error-overlay').display = 'block';
     document.getElementById('error-box').display = 'block';
     document.getElementById('error-overlay').style.opacity = 1;
     document.getElementById('error-overlay').style.opacity = 1;
+    const req = new XMLHttpRequest();
+    req.open('/api/ping','GET');
+    req.onload = () => {
+        if (!req.status===200) {
+            setTimeout(req.send.bind(req),2000);
+            return;
+        }
+        
+        document.getElementById('error-overlay').style.opacity = 1;
+        document.getElementById('error-overlay').style.opacity = 1;
+
+        setTimeout(()=>{
+            document.getElementById('error-overlay').display = 'block';
+            document.getElementById('error-box').display = 'block';
+        },200);
+    }
+    req.onerror = () => {
+        setTimeout(req.send.bind(req),2000);
+    }
 }
 

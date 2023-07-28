@@ -47,6 +47,7 @@ model Community {
     Description     String      @db.VarChar(1024)
     Population      Int         @default(0)
     CreatedAt       DateTime    @default(now())
+    CreatedBy       String      @db.Uuid
     Members         CommunityMember[]
     Posts           Post[]
     Tags            TaggedCommunity[]
