@@ -64,6 +64,7 @@ model CommunityMember {
     Admin           Boolean     @default(false)
     Banned          Boolean     @default(false)
     @@unique([UserID,CommunityID])
+    @@index([UserID,CommunityID])
     @@index([UserID])
     // do we want to index CommunityID?
 }
@@ -93,7 +94,7 @@ model Post {
     CommunityID     String      @db.Uuid
     Community       Community   @relation(fields: [CommunityID],references: [CommunityID])
     Type            PostType    @default(TEXT)
-    Title           String      @db.VarChar(128) // maybe index this as well?
+    Title           String      @db.VarChar(128)
     Url             String?     @db.VarChar(1024)
     Body            String?     @db.Text
     Rating          Int         @default(0)
@@ -108,6 +109,7 @@ model Post {
     Comments        Comment[]
     Votes           Vote[]
     Tags            TaggedPost[]
+    @@index([Title])
     @@index([CommunityID])
     @@index([PostedAt])
     @@unique([PostID,CommunityID])
@@ -221,6 +223,7 @@ model Report {
     @@index([ReportedID])
 }
 
+//update this in src/types/post_data.ts if changed
 enum PostType {
     TEXT
     IMAGE
