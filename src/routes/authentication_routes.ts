@@ -3,14 +3,16 @@ import bcrypt from 'bcrypt';
 import logger from '../util/logger';
 
 const login:Route = ['/login','POST','optional', async (req:any,res:any) => {
+
+    // IF THIS ISNT WORKING REMEMBER TO SET THE CONTENT-TYPE HEADER!
     
     if (req.auth) {
         res.status(200).contentType('json').send(`{"status":"success","token":"${req.cookies.auth}"}`);;
         return;
     }
 
-    if (!req.body.username || !req.body.password) {
-        res.redirect('/login');
+    if (!req.body.email || !req.body.password) {
+        res.redirect('/');
         return;
     }
 
@@ -23,12 +25,12 @@ const login:Route = ['/login','POST','optional', async (req:any,res:any) => {
             IsAdmin:true
         },
         where: {
-            Email:req.body.username
+            Email:req.body.email
         }
     });
 
     if (!loginInfo) {
-        res.send(`{"status":"invalid_credentials"`);
+        res.send(`{"status":"invalid_credentials"}`);
         return;
     }
 
@@ -37,7 +39,7 @@ const login:Route = ['/login','POST','optional', async (req:any,res:any) => {
         return;
     }
 
-    res.send(`{"status":"invalid_credentials"`);
+    res.send(`{"status":"invalid_credentials"}`);
     return;
 }];
 

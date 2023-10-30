@@ -1,0 +1,354 @@
+/*#region page*/
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+    background-color: #1f1f1f;
+    color: #bfbfbf;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+body {
+    margin: 0;
+}
+/*#endregion*/
+
+/*#region header*/
+header-container {
+    display: block;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 9vmin;
+}
+
+header {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-image: radial-gradient(#10a7cf,#101091);
+}
+
+header profile {
+    display: block;
+    position: absolute;
+    top:0;
+    right:0;
+    width:fit-content;
+    height: 100%;
+    padding-right: 1vw;
+
+}
+
+header profile button {
+    height: 100%;
+    width: fit-content;
+    padding: 0 1vw;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 2vmin;
+    font-size: 3vmin;
+    color: #bfbfbf;
+    transition: all 0.1s linear;
+}
+
+header profile button:hover {
+    background-color: #00000020;
+    box-shadow: inset 0 0 1vw 0 #000070, 0 0 1vw 0 #000070;
+}
+
+.logo {
+    height:80%;
+    position: absolute;
+    top: 14%;
+    left: 1.5%;
+}
+
+/*#endregion*/
+
+/*#region banner*/
+banner {
+    display:block;
+    margin-top: 3vh;
+    margin-left: 2vw;
+    width: 96vw;
+    height: 30vmin;
+    background-color: #2323a0;
+    border-radius: 1vmin;
+}
+/*#endregion*/
+
+/*#region content*/
+.content-container {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+content {
+    display: block;
+    margin: 3vh 0 5vh 0;
+    width: 90vw;
+    border-radius: 1vmin;
+}
+
+content-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 8vh;
+    box-shadow: 0 0.1vh 0.4vh 0 black;
+    background-image: linear-gradient(to bottom, #1313a880,#3333ff60,#1313a880);
+    border-radius: inherit;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+/*#endregion*/
+
+/*#region sidebar*/
+sidebar {
+    display: inline-block;
+    width: 20vw;
+    height: 50vh;
+    background-color: #2020a0;
+    margin: 5vh 2vw;
+    border-radius: 1vmin;
+}
+/*#endregion*/
+
+/*#region search*/
+header search {
+    display: flex;
+    align-items: center;
+    height: 5vmin;
+    margin-top: 0.5vmin;
+    width: fit-content;
+    border-radius: 100px;
+    background-color: #00000020;
+}
+
+.search-icon {
+    display:inline-block;
+    height: 3vmin;
+    margin: 2.5vmin 1vw;
+}
+
+.search-form {
+    display: inline-block;
+}
+
+.search-input {
+    display: inline-block;
+    border: none;
+    background-color: transparent;
+    color: black !important;
+    height:80%;
+}
+
+.search-input:focus {
+    outline: none;
+}
+/*#endregion*/
+
+/*#region signup/logon*/
+signup, login {
+    display: none;
+    opacity: 0;
+    position: absolute;
+    top: 25vh;
+    left: 30vw;
+    width: min(40vw,500px);
+    height: fit-content;
+    padding: 1vh 0.8vw 10vh 0.8vw;
+    z-index: 10;
+    border-radius: 2vmin;
+    border: 0.2vmin solid #000050;
+    box-shadow: 0 0 1vmin 0 #000040;
+    background-color: #1f1f1f;
+    transition: all 0.15s linear;
+}
+
+#login-overlay, #signup-overlay {
+    display: none;
+    position: fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    z-index: 9;
+    opacity: 0;
+    background-color: #00002060;
+    transition: all 0.15s linear;
+}
+
+.login-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width:100%;
+    height:fit-content;
+}
+
+button, .button {
+    outline: none;
+    border: 0.5vmin solid #000070;
+    background-color: #000092;
+    border-radius: 1.3vmin;
+    font-size: 2.5vmin;
+    padding: 0.6vh 1vw;
+    color: #bfbfbf;
+    box-shadow: none;
+    transition: all 0.1s linear;
+}
+
+button:hover, .button:hover {
+    box-shadow: inset 0 0 2vmin 0.3vmin #00004080;
+}
+
+.primary-button {
+    font-size: 2.7vmin;
+    padding: 0.5vh 1vw;
+    background-color: #0000b0;
+    border-radius: 1.3vmin;
+    border: 0.5vmin solid #000080;
+}
+
+input {
+    display: inline-block;
+    outline: none;
+    border: 0.3vmin solid #000070;
+    background-color: #131388;
+    border-radius: 1.2vmin;
+    font-size: 2.2vmin;
+    padding: 2% 2%;
+    margin-bottom: 3%;
+    color: #bfbfbf;
+    transition: all 0.1s linear;
+}
+
+label {
+    display: inline-block;
+    font-size: 2.2vmin;
+    padding-bottom: 1%;
+}
+
+.small-top-margin {
+    margin-top: 3%;
+}
+
+.close-button {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+h2 {
+    font-size: 3.5vmin;
+}
+
+.input-error {
+    border: 0.3vmin solid #a00000;
+    box-shadow: 0 0 0.5vmin 0 #a00000;
+}
+
+error-string {
+    display: block;
+    color: #f03030;
+}
+
+.form-error {
+    display: none;
+}
+
+.relative-width {
+    position: relative;
+    width: 100%;
+    height: fit-content;
+}
+
+.left {
+    position: absolute;
+    top:0;
+    left:0;
+    margin-left: 10%;
+}
+
+.right {
+    position: absolute;
+    top:0;
+    right:0;
+    margin-right: 10%;
+}
+
+/*#endregion*/
+
+/*#region posts*/
+posts {
+    display: block;
+    width: 90vw;
+    height: fit-content;
+    padding: 2.3vh 0 2vh 0;
+}
+
+post {
+    display: block;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: fit-content;
+    border-bottom: 0.2vmin solid #303030;
+    background-color: #131358;
+    border-radius: 1vmin;
+    margin-bottom: 2vh;
+    cursor: default;
+    padding: 1vmin 2vmin 2vmin 2vmin;
+}
+
+post:hover {
+    box-shadow: 0 0 0.3vmin 0 #808080;
+}
+
+post post-header {
+    display: block;
+    width:100%;
+    height:2.5vmin;
+    font-size: 1.8vmin;
+    color: #9f9f9f;
+}
+
+post post-header community, post post-header author {
+    display: inline;
+    text-decoration: underline;
+    cursor: pointer;
+    padding-right: 1vmin;
+}
+
+post title {
+    display: block;
+    width: 100%;
+    height: fit-content;
+    font-weight: 600;
+    font-size: 2.8vmin;
+    margin: 1vmin 0 1.5vmin 0;
+}
+
+post body-preview {
+    display: block;
+    width: 100%;
+    height: fit-content;
+    font-size: 2vmin;
+    margin-left: 1vmin;
+}
+/*#endregion*/
+

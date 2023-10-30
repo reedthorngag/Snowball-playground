@@ -1,32 +1,34 @@
-
 datasource db {
     provider = "postgresql"
     url = env("DB_URL")
 }
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
+    previewFeatures = ["fullTextSearch"]
 }
 
 model LoginInfo {
     Email           String      @db.VarChar(64) @id // 64 is heaps, I googled.
     Password        String      @db.Char(60) // change this to the len of the password hash if it is changed
-    UserID          String      @db.Uuid @unique @default(uuid())
+    UserID          String      @db.Uuid @unique
     IsAdmin         Boolean     // this is duplicated from User table to remove a join for every login request
-    // User            User?       @relation(fields: [UserID],references: [UserID])
+    User            User?       @relation(fields: [UserID],references: [UserID])
 }
 
 model User {
     UserID          String      @db.Uuid @id @default(uuid())
-    //LoginInfo       LoginInfo?
-    Name            String      @db.VarChar(32) @unique
-    IsAdmin         Boolean     
-    LastActed       DateTime    @default(now())
+    LoginInfo       LoginInfo?
+    Name            String      @db.VarChar(48)
+    DisplayName     String      @db.VarChar(24) @unique
+    IsAdmin         Boolean
+    LastActed       DateTime    @default(now()) @updatedAt
     Joined          DateTime    @default(now())
     Bio             String      @db.VarChar(1024) @default("")
     CommentsScore   Int         @default(0)
     PostsScore      Int         @default(0)
     IsDeleted       Boolean     @default(false)
+    CreatedCommunities Community[]
     Communities     CommunityMember[]
     Comments        Comment[]
     Posts           Post[]
@@ -37,6 +39,7 @@ model User {
     CompletedRequirements CompletedRequirement[]
     ReportedUsers   Report[]    @relation(name:"ReportedUsers")
     ReportsAgainst  Report[]    @relation(name:"ReportsAgainst")
+    @@index([DisplayName])
 }
 
 model Community {
@@ -45,9 +48,12 @@ model Community {
     Description     String      @db.VarChar(1024)
     Population      Int         @default(0)
     CreatedAt       DateTime    @default(now())
+    CreatedBy       String      @db.Uuid
+    CreatedUser     User        @relation(fields:[CreatedBy],references: [UserID])
     Members         CommunityMember[]
     Posts           Post[]
     Tags            TaggedCommunity[]
+    @@index([Name])
 }
 
 model CommunityMember {
@@ -58,6 +64,7 @@ model CommunityMember {
     Admin           Boolean     @default(false)
     Banned          Boolean     @default(false)
     @@unique([UserID,CommunityID])
+    @@index([UserID,CommunityID])
     @@index([UserID])
     // do we want to index CommunityID?
 }
@@ -87,10 +94,10 @@ model Post {
     CommunityID     String      @db.Uuid
     Community       Community   @relation(fields: [CommunityID],references: [CommunityID])
     Type            PostType    @default(TEXT)
-    Title           String      @db.VarChar(128) // maybe index this as well?
+    Title           String      @db.VarChar(128)
     Url             String?     @db.VarChar(1024)
-    Body            String?
-    Rating          Int
+    Body            String?     @db.Text
+    Rating          Int         @default(0)
     AuthorID        String      @db.Uuid
     Author          User        @relation(fields: [AuthorID],references: [UserID])
     PostedAt        DateTime    @default(now())
@@ -102,7 +109,9 @@ model Post {
     Comments        Comment[]
     Votes           Vote[]
     Tags            TaggedPost[]
+    @@index([Title])
     @@index([CommunityID])
+    @@index([PostedAt])
     @@unique([PostID,CommunityID])
 }
 
@@ -214,6 +223,7 @@ model Report {
     @@index([ReportedID])
 }
 
+//update this in src/types/post_data.ts if changed
 enum PostType {
     TEXT
     IMAGE
@@ -221,4 +231,3 @@ enum PostType {
     VIDEO
     LINK
 }
-

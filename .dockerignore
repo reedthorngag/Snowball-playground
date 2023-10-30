@@ -8,5 +8,5 @@
 !prisma
 !src
 
-#remove this if u have problems or for prod (also remember to uncomment npm i in the DockerFile too)
+#remove this if you have problems or for prod (also remember to uncomment 'npm i' in the DockerFile too)
 !node_modules
