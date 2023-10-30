@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="tailwind.css">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #e7e7e7;
+        }
+        #header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 10vh;
+            background-color: #fff;
+            border-radius: 1vh;
+        }
+        #header img {
+            height: 20vh;
+            width: auto;
+            overflow: hidden;
+        }
+        .actionbutton {
+            background-color: #ffffff;
+            border: 0.1vh solid #000000;
+            border-radius: 5px;
+            padding: 1vh;
+            margin: 1vh;
+            font-family: 'Mina', sans-serif;
+            font-size: 1em;
+            width: 5vw;
+        }
+
+        #actions {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 0 auto;
+            width: 50vw;
+        }
+
+        #maincont {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: fit-content;
+            background-color: #fff;
+            width: 99.5;
+            padding: 0 2vh 0 2vh;
+            border-radius: 1vh;
+            margin: 0 auto;
+        }
+        table {
+            border: 1px solid #000000;
+        }
+        #scanUI {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: fit-content;
+            background-color: #fff;
+            width: 99.5;
+            padding: 0 2vh 0 2vh;
+            border-radius: 1vh;
+            margin: 0 auto;
+        }
+        p, h1{
+            font-family: 'Mina', sans-serif;
+            font-size: 1em;
+        }
+        input {
+            font-family: 'Mina', sans-serif;
+            font-size: 1em;
+        }
+        .manualAction {
+            margin: 1vh;
+            padding: 1vh;
+            border-radius: 5px;
+            border: 1px solid #000000;
+            background-color: #fdfdfd;
+        }
+
+        th, td {
+            border: 1px solid #000000;
+            padding: 1vh;
+            width: 10vw;
+            text-align: center;
+            font-family: 'Mina', sans-serif;
+            font-size: 1em;
+        }
+        th {
+            font-size: 1.5em;
+        }
+
+    </style>
+    <script>
+        let types = new XMLHttpRequest();
+        types.open("GET", "/api/types", true);
+        var assetTypes;
+
+        types.onload = function () {
+            switch (types.status) {
+                case 200:
+                    //Successful
+                    console.log(types.responseText)
+                    assetTypes = JSON.parse(types.responseText);
+                    break;
+                default:
+                    alert(`Error ${types.status}. Please try again later.`);
+            }
+        }
+        types.setRequestHeader("Content-Type", "application/json");
+        types.send();
+
+        let assetGather = new XMLHttpRequest();
+        assetGather.open("GET", "/api/assets", true);
+        var assets;
+        assetGather.onload = function () {
+            switch (assetGather.status) {
+                case 200:
+                    //Successful
+                    console.log(assetGather.responseText)
+                    assets = JSON.parse(assetGather.responseText);
+                    //Add the data to the table
+                    let tab = document.getElementById("assetab")
+                    for (let i = 0; i < assets.length; i++) {
+                        let row = tab.insertRow();
+                        let cell1 = row.insertCell();
+                        let cell2 = row.insertCell();
+                        let cell3 = row.insertCell();
+                        let cell4 = row.insertCell();
+                        cell1.innerHTML = assets[i].TagUID;
+                        cell2.innerHTML = assets[i].AssetType;
+                        cell3.innerHTML = assets[i].Size;
+                        cell4.innerHTML = assets[i].Borrowed == 0 ? "Avaliable" : "Borrowed";
+                    }
+                    break;
+                default:
+                    alert(`Error ${assetGather.status}. Please try again later.`);
+            }
+        }
+        assetGather.send();
+
+        function submitman() {
+            //Manual submission, primarily for testing
+            let assetReq = new XMLHttpRequest();
+            assetReq.open("POST", "/api/assets", true);
+
+            assetReq.onload = function () {
+                switch (assetReq.status) {
+                    case 200:
+                        return;
+                        //Successful
+                    case 404:
+                        //Asset not found, prompt to create
+                        if (!confirm("Asset not found. Would you like to create it?")) return;
+                        let UID = prompt("Please enter the UID of the asset you would like to create.", document.getElementById("tagUID").value);
+                        let typeslist = [];
+                        //Convert to an array
+                        console.log(assetTypes)
+                        for (let i = 0; i < assetTypes.length; i++) {
+                            typeslist.push(`${i + 1}: ${assetTypes[i].Value}`);
+                        }
+                        console.log(typeslist)
+                        let typeChoice = -1;
+                        while ((parseInt(typeChoice) < 1) || (parseInt(typeChoice) > typeslist.length)) {
+                            typeChoice = prompt(`Please enter the type of the asset you would like to create.\n${typeslist.join('\n')}`);
+                            console.log(parseInt(typeChoice) < 1 + "\n" + parseInt(typeChoice) > typeslist.length)
+                        }
+                        let size = prompt("Please enter the size of the asset you would like to create.");
+                        if (!confirm(`Are you sure you would like to create an asset with the following details?\nUID: ${UID}\nType: ${assetTypes[parseInt(typeChoice) - 1].Value}\nSize: ${size}`)) return;
+                        let createReq = new XMLHttpRequest();
+                        createReq.open("POST", "/api/assets", true);
+                        createReq.onload = function () {
+                            switch (createReq.status) {
+                                case 200:
+                                    alert("Asset created successfully.");
+                                    return;
+                                default:
+                                    alert(`Error ${createReq.status}. Please try again later.`);
+                            }
+                        }
+                        createReq.setRequestHeader("Content-Type", "application/json");
+                        createReq.send(JSON.stringify({
+                            "tagUID": UID,
+                            "type": assetTypes[parseInt(typeChoice) - 1].Value,
+                            "size": size
+                        }));
+                        return
+                    default:
+                        alert(`Error ${assetReq.status}. Please try again later.`);
+                }
+            }
+
+            assetReq.setRequestHeader("Content-Type", "application/json");
+            
+            assetReq.send(JSON.stringify({
+                "tagUID": document.getElementById("tagUID").value
+            }));
+        }
+    </script>
+</head>
+
+<body>
+    <div id="header">
+        <a href="/">
+            <img src="/img/logo.png" alt="logo">
+        </a>
+    </div>
+    <br>
+    <div id="maincont">
+        <div id="scanUI">
+            <h1>Scan an asset</h1>
+            <img src="/img/scan.png" width="100vh" alt="scan">
+            <p id="status">Not active</p>
+            <form onsubmit="submitman(); return false">
+                <input class="manualAction" type="text" id="tagUID" name="tagUID" placeholder="Tag UID">
+                <input class="manualAction" type="button" id="scan" value="Scan" onclick="submitman()">
+            </form>
+        </div>
+        <br>
+        <div id="actions">
+            <button class="actionbutton" id="refresh">Refresh</button>
+            <button class="actionbutton" id="edit" disabled>Edit</button>
+        </div>
+        <div id="assetTable">
+            <table id="assetab">
+                <tr>
+                    <th>Tag UID</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Status</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

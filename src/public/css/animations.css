@@ -1,0 +1,14 @@
+.animate-opacity-pulse-5 {
+    animation: opacity-pulse 0.5s ease-in-out 5;
+}
+@keyframes opacity-pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 1;
+    }
+}

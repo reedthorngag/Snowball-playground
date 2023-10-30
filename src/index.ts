@@ -3,9 +3,6 @@ import './tests/run_tests';
 import app from './server';
 import logger from './util/logger';
 import router from './router';
-import mock_data from './mock_data';
-
-mock_data();
 
 // NOTE: prismaClient and authenticator are global variables, be careful not to overwrite them (declared in preinitilization.ts)
 
